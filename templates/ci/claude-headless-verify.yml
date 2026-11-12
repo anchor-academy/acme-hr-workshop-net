@@ -1,0 +1,47 @@
+# Independent Claude review as a required check. Copy to .github/workflows/ and
+# require the "claude-review" check in branch protection.
+# Secret: ANTHROPIC_API_KEY (use an API workspace with a monthly spend limit).
+name: claude-review
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10            # limit 1: wall-clock time
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Skip if no key
+        id: key
+        env: { KEY: "${{ secrets.ANTHROPIC_API_KEY }}" }
+        run: |
+          if [ -z "$KEY" ]; then echo "ANTHROPIC_API_KEY secret is missing: review skipped." >> "$GITHUB_STEP_SUMMARY"; echo "skip=true" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Install Claude Code
+        if: steps.key.outputs.skip != 'true'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Review
+        if: steps.key.outputs.skip != 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git diff "$BASE"...HEAD > pr.diff
+          claude -p "You are an independent reviewer. Read pr.diff and the files it touches. Check: missing or weak tests for changed behaviour, obvious bugs, security problems, secrets. Be specific: file and line. End with exactly one line: VERDICT: PASS or VERDICT: FAIL." \
+            --output-format json --max-turns 5 --allowedTools "Read,Grep,Glob" > review.json   # limit 2: turns; read-only tools
+          jq -r '.result' review.json > review.md
+          echo "Cost USD: $(jq -r '.total_cost_usd' review.json) · Turns: $(jq -r '.num_turns' review.json)" >> "$GITHUB_STEP_SUMMARY"   # limit 3: visible cost
+
+      - name: Comment and decide
+        if: steps.key.outputs.skip != 'true'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body-file review.md
+          tail -n 1 review.md | grep -q "VERDICT: PASS"

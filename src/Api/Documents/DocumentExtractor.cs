@@ -57,23 +57,35 @@ public class DocumentExtractor(IClaudeChat claude, ClaudeOptions options)
     public async Task<ExtractionResult> ExtractAsync(string documentText, CancellationToken ct = default)
     {
         var history = new List<MessageParam> { new UserMessageParam { Content = $"<document>\n{documentText}\n</document>" } };
+        Extraction? data = null;
+        var problems = new List<string>();
 
-        // TODO (Lab 6): this first version trusts whatever comes back. Make it safe:
-        //  1. Send OutputConfig = new OutputConfig { Format = new JsonOutputFormat { Schema = Schema } }.
-        //  2. Handle a stop_reason other than end_turn: return NeedsReview.
-        //  3. Parse the text into Extraction (catch JsonException) and run DocumentValidator.Check.
-        //  4. If there are problems, retry ONCE: add Claude's answer and the exact problems to history.
-        //  5. Still failing, or kind "other": return NeedsReview with the problems. Max MaxAttempts calls.
-        var res = await claude.SendAsync(new MessageCreateParams
+        for (var attempt = 1; attempt <= MaxAttempts; attempt++)
         {
-            Model = options.Model,
-            MaxTokens = 1024,
-            System = Prompt,
-            Messages = history,
-        }, ct);
+            var res = await claude.SendAsync(new MessageCreateParams
+            {
+                Model = options.Model,
+                MaxTokens = 1024,
+                System = Prompt,
+                Messages = history,
+                OutputConfig = new OutputConfig { Format = new JsonOutputFormat { Schema = Schema } },
+            }, ct);
 
-        var text = string.Concat(res.Content.Select(b => b.TryPickText(out var t) ? t.Text : ""));
-        var data = JsonSerializer.Deserialize<Extraction>(text);
-        return new ExtractionResult(data, DocumentStatus.Valid, [], 1);
+            if (res.StopReason != StopReason.EndTurn)
+                return new ExtractionResult(null, DocumentStatus.NeedsReview, [$"Claude stopped with {res.StopReason?.Raw() ?? "unknown"}"], attempt);
+
+            var text = string.Concat(res.Content.Select(b => b.TryPickText(out var t) ? t.Text : ""));
+            try { data = JsonSerializer.Deserialize<Extraction>(text); problems = data is null ? ["empty result"] : DocumentValidator.Check(data); }
+            catch (JsonException e) { problems = [$"invalid JSON: {e.Message}"]; }
+
+            if (problems.Count == 0) return new ExtractionResult(data, DocumentStatus.Valid, [], attempt);
+            if (data?.Kind == "other") break; // nothing to retry
+
+            // Retry once: show Claude its own answer and the exact problems.
+            history.Add(new AssistantMessageParam { Content = text });
+            history.Add(new UserMessageParam { Content = "These checks failed: " + string.Join("; ", problems) + ". Re-read the document and correct only what is wrong. If the document itself is inconsistent, keep the values as written." });
+        }
+
+        return new ExtractionResult(data, DocumentStatus.NeedsReview, problems, MaxAttempts);
     }
 }
