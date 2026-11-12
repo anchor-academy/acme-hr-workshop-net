@@ -11,7 +11,7 @@
 3. Vercel: Add New Project → your repo → Root Directory `web` → env `NEXT_PUBLIC_API_URL` = your Render URL. Add the Vercel URL to `AllowedOrigins` in Render.
 4. GitHub → Settings → Branches: protect `main`, require the checks **ci** and **claude-review** (they appear after the first run).
 5. Open a pull request from `lab5-planted-bug` to `main`. Watch `ci` pass and `claude-review` fail. Read the review comment and the cost in the job summary.
-6. Fix it locally (paste **Fix the planted bug**), push, merge when both checks are green. Watch Render and Vercel deploy.
+6. Fix it locally: check out `lab5-planted-bug`, copy the review comment from the pull request, paste **Fix the planted bug** and replace the placeholder with the comment. Push, merge when both checks are green. Watch Render and Vercel deploy.
 
 ## Done when
 - [ ] The review blocked the bad pull request
