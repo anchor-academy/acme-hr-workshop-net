@@ -37,7 +37,20 @@ public class LeaveController(LeaveService leave) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> List([FromQuery] int? employeeId) => Ok(await leave.ListAsync(employeeId));
 
-    // TODO (Lab 2): POST /leave, POST /leave/{id}/approve, POST /leave/{id}/reject
+    [HttpPost]
+    public Task<IActionResult> Create(CreateLeave input) => Run(() => leave.CreateAsync(input));
+
+    [HttpPost("{id:int}/approve")]
+    public Task<IActionResult> Approve(int id) => Run(() => leave.ApproveAsync(id));
+
+    [HttpPost("{id:int}/reject")]
+    public Task<IActionResult> Reject(int id) => Run(() => leave.RejectAsync(id));
+
+    async Task<IActionResult> Run(Func<Task<Api.Models.LeaveRequest>> action)
+    {
+        try { return Ok(await action()); }
+        catch (LeaveException e) { return Problem(statusCode: 400, title: "Leave request not valid", detail: e.Message); }
+    }
 }
 
 [ApiController, Route("policies")]
