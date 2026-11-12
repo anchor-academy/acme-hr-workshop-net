@@ -50,7 +50,7 @@ public class HelpdeskAgent(IClaudeChat claude, HelpdeskTools tools, ClaudeOption
             history.Add(new AssistantMessageParam { Content = res.Content.Select(b => new ContentBlockParam(b.Json)).ToList() });
 
             if (res.StopReason != StopReason.ToolUse)
-                return new ChatReply(TextOf(res), calls, turn, res.StopReason.Raw(), inTok, outTok);
+                return new ChatReply(TextOf(res), calls, turn, res.StopReason?.Raw() ?? "unknown", inTok, outTok);
 
             // One tool_result for every tool_use, even when the tool fails.
             var results = new List<ContentBlockParam>();
