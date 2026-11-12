@@ -31,18 +31,40 @@ public class HelpdeskAgent(IClaudeChat claude, HelpdeskTools tools, ClaudeOption
                 ? new AssistantMessageParam { Content = turn.Text }
                 : new UserMessageParam { Content = $"<message>{turn.Text}</message>" });
 
-        // TODO (Lab 1): the agent loop. Use Claude Code with the "Finish the agent loop" prompt in PROMPTS.md.
-        // For turn = 1 .. MaxTurns:
-        //   1. Send: Model = options.Model, MaxTokens, System (SystemPrompt with {today}), Tools = HelpdeskTools.Definitions, Messages = history.
-        //   2. Add Claude's own turn to history:  new AssistantMessageParam { Content = res.Content.Select(b => new ContentBlockParam(b.Json)).ToList() }
-        //   3. If res.StopReason != StopReason.ToolUse: return the text (TextOf(res)), the tool calls, turns, res.StopReason?.Raw() ?? "unknown", tokens.
-        //   4. Else for every tool_use block (block.TryPickToolUse(out var call)): run tools.RunAsync(...),
-        //      log it, and add  new ToolResultBlockParam(call.ID) { Content = outcome.Json, IsError = outcome.IsError }.
-        //      One tool_result for EVERY tool_use, even when the tool fails.
-        //   5. Add all results as ONE user message, then loop.
-        // After MaxTurns: return a polite "an HR officer will follow up" reply with StopReason "turn_limit".
-        await Task.CompletedTask;
-        throw new NotImplementedException("Lab 1: complete the agent loop in HelpdeskAgent.RunAsync");
+        var calls = new List<ToolCallLog>();
+        long inTok = 0, outTok = 0;
+
+        for (var turn = 1; turn <= MaxTurns; turn++)
+        {
+            var res = await claude.SendAsync(new MessageCreateParams
+            {
+                Model = options.Model,
+                MaxTokens = 1024,
+                System = SystemPrompt.Replace("{today}", DateTime.UtcNow.ToString("yyyy-MM-dd (dddd)")),
+                Tools = HelpdeskTools.Definitions,
+                Messages = history,
+            }, ct);
+            inTok += res.Usage.InputTokens; outTok += res.Usage.OutputTokens;
+
+            // Resend Claude's own turn next time, exactly as it came back.
+            history.Add(new AssistantMessageParam { Content = res.Content.Select(b => new ContentBlockParam(b.Json)).ToList() });
+
+            if (res.StopReason != StopReason.ToolUse)
+                return new ChatReply(TextOf(res), calls, turn, res.StopReason.Raw(), inTok, outTok);
+
+            // One tool_result for every tool_use, even when the tool fails.
+            var results = new List<ContentBlockParam>();
+            foreach (var block in res.Content)
+            {
+                if (!block.TryPickToolUse(out var call)) continue;
+                var outcome = await tools.RunAsync(call.Name, call.Input, employeeId);
+                calls.Add(new ToolCallLog(call.Name, JsonSerializer.Serialize(call.Input), outcome.Json, outcome.IsError));
+                results.Add(new ToolResultBlockParam(call.ID) { Content = outcome.Json, IsError = outcome.IsError });
+            }
+            history.Add(new UserMessageParam { Content = results });
+        }
+
+        return new ChatReply("Sorry, I could not finish this. An HR officer will follow up.", calls, MaxTurns, "turn_limit", inTok, outTok);
     }
 
     static string TextOf(Message m) =>
