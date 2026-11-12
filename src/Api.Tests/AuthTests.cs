@@ -115,7 +115,9 @@ public class AccessServiceTests
 public class ApiFactory : WebApplicationFactory<Program>
 {
     readonly string _file = Path.Combine(Path.GetTempPath(), $"acme-test-{Guid.NewGuid():N}.db");
-    public ApiFactory() => Environment.SetEnvironmentVariable("SQLITE_PATH", $"Data Source={_file}");
+    protected override void ConfigureWebHost(Microsoft.AspNetCore.Hosting.IWebHostBuilder builder) =>
+        builder.UseSetting("SQLITE_PATH", $"Data Source={_file}");
+    public bool UsesOwnFile => File.Exists(_file);
 
     public async Task<HttpClient> SignedInAs(string email)
     {
@@ -180,6 +182,7 @@ public class AuthApiTests(ApiFactory api) : IClassFixture<ApiFactory>
     {
         var res = await api.CreateClient().GetAsync("/health");
         Assert.Equal(HttpStatusCode.OK, res.StatusCode);
+        Assert.True(api.UsesOwnFile); // each test class gets its own database file
     }
 
     [Fact]
