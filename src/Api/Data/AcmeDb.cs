@@ -1,3 +1,4 @@
+using Api.Documents;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,11 +9,13 @@ public class AcmeDb(DbContextOptions<AcmeDb> options) : DbContext(options)
     public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<LeaveRequest> LeaveRequests => Set<LeaveRequest>();
     public DbSet<Policy> Policies => Set<Policy>();
+    public DbSet<StoredDocument> Documents => Set<StoredDocument>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
         b.Entity<LeaveRequest>().Property(x => x.HalfDay).HasConversion<string>();
         b.Entity<LeaveRequest>().Property(x => x.Status).HasConversion<string>();
+        b.Entity<StoredDocument>().Property(x => x.Status).HasConversion<string>();
         b.Entity<Employee>().Property(x => x.AnnualEntitlement).HasPrecision(5, 1);
     }
 }

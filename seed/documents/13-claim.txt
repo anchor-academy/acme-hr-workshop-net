@@ -1,0 +1,10 @@
+EXPENSE CLAIM EC-2026-0143
+Vendor: Kedai Buku Ilmu
+Date: 11/10/2026
+Currency: MYR
+
+  Technical book                  129.90
+
+  Subtotal                        129.90
+  SST                               0.00
+  TOTAL                           129.90

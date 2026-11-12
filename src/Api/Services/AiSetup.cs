@@ -12,6 +12,7 @@ public static class AiSetup
         services.AddScoped<Api.Helpdesk.HelpdeskTools>();
         services.AddScoped<Api.Helpdesk.HelpdeskAgent>();
         services.AddScoped<Api.Research.PolicyResearch>();
+        services.AddScoped<Api.Documents.DocumentExtractor>();
         services.AddSingleton(new ClaudeOptions(config["Claude:Model"] ?? "claude-sonnet-5-5"));
         return services;
     }

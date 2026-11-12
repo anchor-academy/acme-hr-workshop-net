@@ -27,3 +27,5 @@ export function currentEmployeeId(): number {
 export function setCurrentEmployeeId(id: number) {
   window.localStorage.setItem("acme.employeeId", String(id));
 }
+
+export type StoredDocument = { id: number; employeeId: number; fileName: string; kind: string; extractedJson: string; status: "Valid" | "NeedsReview"; problems: string; createdAt: string };

@@ -1,0 +1,8 @@
+Sijil Cuti Sakit
+Klinik: Poliklinik Sentosa, Petaling Jaya
+Nama pesakit: Daniel Lee Wei Ming
+Tarikh mula: 12 Oct 2026
+Tarikh tamat: 12 Oct 2026
+Bilangan hari: 1
+
+(Synthetic document for training)

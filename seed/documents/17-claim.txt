@@ -1,0 +1,10 @@
+EXPENSE CLAIM EC-2026-0147
+Vendor: Parking Menara Contoh
+Date: 21/10/2026
+Currency: MYR
+
+  Parking                          24.00
+
+  Subtotal                         24.00
+  SST                               1.44
+  TOTAL                            26.44

@@ -1,0 +1,226 @@
+{
+  "01-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "Valid",
+    "fields": {
+      "employee_name": "Aisyah Rahman",
+      "clinic": "Klinik Mesra Bangsar",
+      "date_from": "2026-10-05",
+      "date_to": "2026-10-06",
+      "days": 2
+    }
+  },
+  "02-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "Valid",
+    "fields": {
+      "employee_name": "Daniel Lee Wei Ming",
+      "clinic": "Poliklinik Sentosa, Petaling Jaya",
+      "date_from": "2026-10-12",
+      "date_to": "2026-10-12",
+      "days": 1
+    }
+  },
+  "03-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "Valid",
+    "fields": {
+      "employee_name": "Priya Nair",
+      "clinic": "Klinik Dr. Tan & Rakan",
+      "date_from": "2026-09-28",
+      "date_to": "2026-09-30",
+      "days": 3
+    }
+  },
+  "04-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "Valid",
+    "fields": {
+      "employee_name": "Muhammad Faiz Hakim",
+      "clinic": "Klinik Kesihatan Ampang (synthetic)",
+      "date_from": "2026-11-02",
+      "date_to": "2026-11-03",
+      "days": 2
+    }
+  },
+  "05-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "Valid",
+    "fields": {
+      "employee_name": "Chong Mei Ling",
+      "clinic": "Klinik Famili Cheras",
+      "date_from": "2026-10-20",
+      "date_to": "2026-10-22",
+      "days": 3
+    }
+  },
+  "06-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "Valid",
+    "fields": {
+      "employee_name": "Siti Nurain Osman",
+      "clinic": "Poliklinik Harmoni Shah Alam",
+      "date_from": "2026-08-14",
+      "date_to": "2026-08-15",
+      "days": 2
+    }
+  },
+  "07-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "Valid",
+    "fields": {
+      "employee_name": "Ravi Subramaniam",
+      "clinic": "Klinik Seri Damansara",
+      "date_from": "2026-10-27",
+      "date_to": "2026-10-27",
+      "days": 1
+    }
+  },
+  "08-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "NeedsReview",
+    "fields": {
+      "employee_name": "Tan Jia Hui",
+      "clinic": "Klinik Utama Puchong",
+      "date_from": "2026-09-07",
+      "date_to": "2026-09-09",
+      "days": 2
+    }
+  },
+  "09-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "Valid",
+    "fields": {
+      "employee_name": "Nurul Ain Kamal",
+      "clinic": "Poliklinik Bandar Baru",
+      "date_from": "2026-07-21",
+      "date_to": "2026-07-22",
+      "days": 2
+    }
+  },
+  "10-mc.txt": {
+    "kind": "medical_certificate",
+    "status": "NeedsReview",
+    "fields": {
+      "employee_name": "Lim Kok Seng",
+      "clinic": "Klinik Medik Subang",
+      "date_from": "2026-10-30",
+      "date_to": "2026-10-29",
+      "days": 0
+    }
+  },
+  "11-claim.txt": {
+    "kind": "expense_claim",
+    "status": "Valid",
+    "fields": {
+      "claim_no": "EC-2026-0141",
+      "vendor": "RideNow (synthetic)",
+      "date": "2026-10-03",
+      "currency": "MYR",
+      "subtotal": 59.7,
+      "tax": 0.0,
+      "total": 59.7
+    }
+  },
+  "12-claim.txt": {
+    "kind": "expense_claim",
+    "status": "Valid",
+    "fields": {
+      "claim_no": "EC-2026-0142",
+      "vendor": "Hotel Seri Pantai Penang",
+      "date": "2026-10-08",
+      "currency": "MYR",
+      "subtotal": 480.0,
+      "tax": 38.4,
+      "total": 518.4
+    }
+  },
+  "13-claim.txt": {
+    "kind": "expense_claim",
+    "status": "Valid",
+    "fields": {
+      "claim_no": "EC-2026-0143",
+      "vendor": "Kedai Buku Ilmu",
+      "date": "2026-10-11",
+      "currency": "MYR",
+      "subtotal": 129.9,
+      "tax": 0.0,
+      "total": 129.9
+    }
+  },
+  "14-claim.txt": {
+    "kind": "expense_claim",
+    "status": "Valid",
+    "fields": {
+      "claim_no": "EC-2026-0144",
+      "vendor": "Restoran Selera Kita",
+      "date": "2026-10-15",
+      "currency": "MYR",
+      "subtotal": 186.0,
+      "tax": 11.16,
+      "total": 197.16
+    }
+  },
+  "15-claim.txt": {
+    "kind": "expense_claim",
+    "status": "Valid",
+    "fields": {
+      "claim_no": "EC-2026-0145",
+      "vendor": "SkyHop Air (synthetic)",
+      "date": "2026-09-25",
+      "currency": "MYR",
+      "subtotal": 354.0,
+      "tax": 0.0,
+      "total": 354.0
+    }
+  },
+  "16-claim.txt": {
+    "kind": "expense_claim",
+    "status": "Valid",
+    "fields": {
+      "claim_no": "EC-2026-0146",
+      "vendor": "Cloud Training Pte Ltd",
+      "date": "2026-10-18",
+      "currency": "SGD",
+      "subtotal": 250.0,
+      "tax": 22.5,
+      "total": 272.5
+    }
+  },
+  "17-claim.txt": {
+    "kind": "expense_claim",
+    "status": "NeedsReview",
+    "fields": {
+      "claim_no": "EC-2026-0147",
+      "vendor": "Parking Menara Contoh",
+      "date": "2026-10-21",
+      "currency": "MYR",
+      "subtotal": 24.0,
+      "tax": 1.44,
+      "total": 26.44
+    }
+  },
+  "18-claim.txt": {
+    "kind": "expense_claim",
+    "status": "Valid",
+    "fields": {
+      "claim_no": "EC-2026-0148",
+      "vendor": "Tech Mart Plaza",
+      "date": "2026-10-24",
+      "currency": "MYR",
+      "subtotal": 114.0,
+      "tax": 6.84,
+      "total": 120.84
+    }
+  },
+  "19-other.txt": {
+    "kind": "other",
+    "status": "NeedsReview",
+    "fields": {}
+  },
+  "20-other.txt": {
+    "kind": "other",
+    "status": "NeedsReview",
+    "fields": {}
+  }
+}
