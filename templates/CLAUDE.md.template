@@ -1,0 +1,25 @@
+# <Project name>
+
+<One sentence: what this system does and who uses it.>
+
+## Stack
+- <e.g. .NET 8 Web API in src/Api, xUnit tests in src/Api.Tests, Next.js in web/>
+
+## Commands
+- Build: `<exact command>`
+- Test: `<exact command>`
+- Run: `<exact command>`
+- Format / lint: `<exact command>`
+
+## Conventions
+- <Where business logic lives, e.g. services, not controllers>
+- <Naming, error format, logging>
+- Every bug fix starts with a failing test.
+- Never read or print `.env` or any secret.
+- See @docs/architecture.md for the bigger picture.
+
+## Definition of done
+- Build and tests pass with no new warnings.
+- Say which tests you ran and the result.
+- New endpoints have tests for the happy path and validation errors.
+- No secrets, no commented-out code, no TODO without a ticket.

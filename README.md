@@ -54,6 +54,8 @@ Each lab starts from the previous lab's finished code. Behind? Check out the nex
 | 5 | [Lab 5 — Claude Code for CI](labs/lab5/README.md) | `lab5-start` | CI gates + Claude review, deploy live |
 | 6 | [Lab 6 — Structured Data Extraction](labs/lab6/README.md) | `lab6-start` | Document intake with HR review |
 
+Finished system (all labs done): branch `final`.
+
 **All prompts:** [PROMPTS.md](PROMPTS.md) — copy and paste, no typing.
 
 **Starter templates for your own repos:** [templates/ on the `final` branch](https://github.com/anchor-academy/acme-hr-workshop-net/tree/final/templates)
