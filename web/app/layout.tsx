@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/leave">Leave</Link>
           <Link href="/helpdesk">Helpdesk</Link>
           <Link href="/policies">Policies</Link>
+          <Link href="/calendar">Calendar</Link>
           {/* Labs add: Helpdesk (Lab 2), Policies (Lab 3), Calendar (Lab 4), Documents and Review (Lab 6) */}
         </nav>
         <main><AuthGate>{children}</AuthGate></main>
