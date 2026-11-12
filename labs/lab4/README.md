@@ -13,7 +13,9 @@
 2. Run `./make-worktrees.sh` (or `.ps1`). Open two terminals:
    - `../acme-wt-calendar` → paste **Feature A** (leave calendar page)
    - `../acme-wt-holidays` → paste **Feature B** (public holidays endpoint)
-3. Merge both branches into your lab branch. Run `dotnet test` and `npm run build` in `web/`.
+   - In the calendar worktree run `cd web && npm install` first (each worktree is a fresh folder).
+   - When a feature is done, paste **Commit the feature** in that worktree.
+3. Back in the main folder: `git merge feature/leave-calendar feature/public-holidays`. Run `dotnet test` and `npm run build` in `web/`.
 4. Paste **Release notes**. Check Claude used the `release-notes` Skill.
 
 ## Done when
