@@ -48,9 +48,10 @@ public class HelpdeskTools(AcmeDb db, LeaveService leave)
         var half = Enum.TryParse<HalfDay>(Get(input, "half_day"), true, out var h) ? h : HalfDay.None;
         var request = await leave.CreateAsync(new CreateLeave(employeeId, start, end, half, Get(input, "reason")));
 
-        // TODO (Lab 2): the approval rule belongs here, in code, not in the prompt (POL-02, POL-14).
-        // More than 3 working days must return status "needs_manager_approval" (the request stays Pending for the manager).
-        return Ok(new { status = request.Status.ToString().ToLowerInvariant(), request_id = request.Id, days = LeaveService.DaysOf(request) });
+        // The approval rule lives here, in code, not in the prompt (POL-02, POL-14).
+        if (request.Status == LeaveStatus.Pending)
+            return Ok(new { status = "needs_manager_approval", request_id = request.Id, days = LeaveService.DaysOf(request), message = "More than 3 working days: sent to the manager for approval." });
+        return Ok(new { status = "approved", request_id = request.Id, days = LeaveService.DaysOf(request) });
     }
 
     async Task<ToolOutcome> CheckPolicyAsync(string topic)
