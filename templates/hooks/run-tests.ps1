@@ -3,7 +3,7 @@
 $out = dotnet test --nologo -v q 2>&1
 if ($LASTEXITCODE -ne 0) {
   [Console]::Error.WriteLine("Tests failing after this edit:")
-  $out | Select-String -Pattern "Failed |error" | Select-Object -First 20 | ForEach-Object { [Console]::Error.WriteLine($_) }
+  $out | Select-String -Pattern "\[FAIL\]|error CS|Assert\.|Expected|Actual|Failed!" | Select-Object -First 20 | ForEach-Object { [Console]::Error.WriteLine($_) }
   exit 2
 }
 exit 0
