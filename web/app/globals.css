@@ -1,0 +1,13 @@
+:root { --ink:#1F1147; --sun:#FFCE32; --mint:#E3F4EE; --paper:#FFFEF9; --coral:#F2542D; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, sans-serif; background: var(--mint); color: var(--ink); }
+nav { display: flex; gap: 16px; align-items: center; padding: 14px 24px; background: var(--ink); }
+nav a { color: var(--paper); text-decoration: none; font-weight: 600; }
+nav .brand { color: var(--sun); font-weight: 800; margin-right: 12px; }
+main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+.card { background: var(--paper); border: 3px solid var(--ink); border-radius: 16px; padding: 16px 20px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; background: var(--paper); }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #ddd; }
+button { background: var(--sun); border: 2px solid var(--ink); border-radius: 10px; padding: 8px 14px; font-weight: 700; cursor: pointer; }
+input, select, textarea { padding: 8px; border: 2px solid var(--ink); border-radius: 8px; font: inherit; }
+.error { color: #B8321A; font-weight: 700; }
