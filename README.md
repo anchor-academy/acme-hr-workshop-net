@@ -20,7 +20,7 @@ Your team builds **Acme HR**, a small HR platform with AI, one lab at a time, us
 5. Run it:
    - API: `dotnet run --project src/Api` → http://localhost:5080/health should say **database connected**
    - Web: `cd web && cp .env.example .env.local && npm install && npm run dev` → http://localhost:3000
-6. Start Claude Code in the repo (`claude`) and ask: *"Explain this repo and how to run it."*
+6. Start Claude Code in the repo (`claude`) and **accept the trust dialog**. Until you do, the team allow rules in `.claude/settings.json` are ignored and Claude asks before every `dotnet` command. Then paste **Explain the repo** from [PROMPTS.md](PROMPTS.md).
 
 ## Labs (build order)
 
@@ -37,7 +37,7 @@ Each lab starts from the previous lab's finished code. Behind? Check out the nex
 
 **All prompts:** [PROMPTS.md](PROMPTS.md) — copy and paste, no typing.
 
-**Starter templates for your own repos:** [templates/](templates/)
+**Starter templates for your own repos:** [templates/ on the `final` branch](https://github.com/anchor-academy/acme-hr-workshop-net/tree/final/templates)
 
 ## Rules of the room
 - Synthetic data only. Never paste company code or data into the labs.

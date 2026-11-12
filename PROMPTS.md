@@ -89,6 +89,11 @@ Read docs/feature-spec-calendar.md and build it. Plan first, tests where it appl
 Read docs/feature-spec-holidays.md and build it with /new-endpoint. Plan first, tests first.
 ```
 
+### Commit the feature (in each worktree)
+```text
+Run the tests, then commit all changes in this worktree with a short message that says what the feature does for HR users.
+```
+
 ### Release notes
 ```text
 Write release notes for this release.
@@ -98,7 +103,11 @@ Write release notes for this release.
 
 ### Fix the planted bug
 ```text
-The claude-review check failed on my pull request. Read the review comment, write a failing test that shows the bug, then fix it. Run the tests and tell me which ran.
+The claude-review check failed on my pull request. Here is the review comment:
+
+<paste the review comment from the pull request>
+
+Write a failing test that shows the bug, then fix it. Run the tests and tell me which ran.
 ```
 
 ## Lab 6 — Document intake

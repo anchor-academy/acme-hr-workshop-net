@@ -4,7 +4,7 @@
 out=$(dotnet test --nologo -v q 2>&1)
 if [ $? -ne 0 ]; then
   echo "Tests failing after this edit:" >&2
-  echo "$out" | grep -E "Failed |error" | head -20 >&2
+  echo "$out" | grep -E "\[FAIL\]|error CS|Assert\.|Expected|Actual|Failed!" | grep -v "^\s*at " | head -30 >&2
   exit 2
 fi
 exit 0
