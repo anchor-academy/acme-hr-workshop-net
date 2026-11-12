@@ -1,0 +1,8 @@
+Sijil Cuti Sakit
+Klinik: Klinik Famili Cheras
+Nama pesakit: Chong Mei Ling
+Tarikh mula: 20 Oct 2026
+Tarikh tamat: 22 Oct 2026
+Bilangan hari: 3
+
+(Synthetic document for training)

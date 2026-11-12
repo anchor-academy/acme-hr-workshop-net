@@ -64,3 +64,5 @@ export function currentEmployee(): Employee | null {
 export function currentEmployeeId(): number {
   return currentEmployee()?.id ?? 0;
 }
+
+export type StoredDocument = { id: number; employeeId: number; fileName: string; kind: string; extractedJson: string; status: "Valid" | "NeedsReview"; problems: string; createdAt: string };

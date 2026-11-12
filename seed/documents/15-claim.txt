@@ -1,0 +1,11 @@
+EXPENSE CLAIM EC-2026-0145
+Vendor: SkyHop Air (synthetic)
+Date: 25/09/2026
+Currency: MYR
+
+  KUL-PEN return                  289.00
+  Baggage 20kg                     65.00
+
+  Subtotal                        354.00
+  SST                               0.00
+  TOTAL                           354.00

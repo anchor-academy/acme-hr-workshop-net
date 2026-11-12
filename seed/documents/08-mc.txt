@@ -1,0 +1,8 @@
+Sijil Cuti Sakit
+Klinik: Klinik Utama Puchong
+Nama pesakit: Tan Jia Hui
+Tarikh mula: 07 Sep 2026
+Tarikh tamat: 09 Sep 2026
+Bilangan hari: 2
+
+(Synthetic document for training)

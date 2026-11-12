@@ -212,3 +212,16 @@ public class AuthApiTests(ApiFactory api) : IClassFixture<ApiFactory>
     record MeResponse(int Id, string Email, string[] Roles);
     record LeaveRow(int Id, int EmployeeId);
 }
+
+public class DocumentsAccessTests(ApiFactory api) : IClassFixture<ApiFactory>
+{
+    [Fact]
+    public async Task Review_queue_is_HR_only()
+    {
+        var farah = await api.SignedInAs(People.Farah);
+        Assert.Equal(HttpStatusCode.Forbidden, (await farah.GetAsync("/documents?status=NeedsReview")).StatusCode);
+
+        var dina = await api.SignedInAs(People.Dina);
+        Assert.Equal(HttpStatusCode.OK, (await dina.GetAsync("/documents?status=NeedsReview")).StatusCode);
+    }
+}

@@ -1,0 +1,11 @@
+EXPENSE CLAIM EC-2026-0141
+Vendor: RideNow (synthetic)
+Date: 03/10/2026
+Currency: MYR
+
+  Ride to client office            28.50
+  Ride back                        31.20
+
+  Subtotal                         59.70
+  SST                               0.00
+  TOTAL                            59.70
