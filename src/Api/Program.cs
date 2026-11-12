@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AcmeDb>(o =>
     else o.UseSqlite(builder.Configuration["SQLITE_PATH"] ?? "Data Source=acme-hr.db");
 });
 builder.Services.AddScoped<LeaveService>();
+builder.Services.AddSingleton<HolidayService>();
 builder.Services.AddAcmeAi(builder.Configuration);
 
 builder.Services.AddControllers().AddJsonOptions(o =>
