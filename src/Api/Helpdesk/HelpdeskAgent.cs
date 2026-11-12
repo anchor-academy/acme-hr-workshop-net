@@ -35,7 +35,7 @@ public class HelpdeskAgent(IClaudeChat claude, HelpdeskTools tools, ClaudeOption
         // For turn = 1 .. MaxTurns:
         //   1. Send: Model = options.Model, MaxTokens, System (SystemPrompt with {today}), Tools = HelpdeskTools.Definitions, Messages = history.
         //   2. Add Claude's own turn to history:  new AssistantMessageParam { Content = res.Content.Select(b => new ContentBlockParam(b.Json)).ToList() }
-        //   3. If res.StopReason != StopReason.ToolUse: return the text (TextOf(res)), the tool calls, turns, res.StopReason.Raw(), tokens.
+        //   3. If res.StopReason != StopReason.ToolUse: return the text (TextOf(res)), the tool calls, turns, res.StopReason?.Raw() ?? "unknown", tokens.
         //   4. Else for every tool_use block (block.TryPickToolUse(out var call)): run tools.RunAsync(...),
         //      log it, and add  new ToolResultBlockParam(call.ID) { Content = outcome.Json, IsError = outcome.IsError }.
         //      One tool_result for EVERY tool_use, even when the tool fails.
