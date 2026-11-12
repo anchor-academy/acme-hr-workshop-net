@@ -1,0 +1,18 @@
+# Render Blueprint: New -> Blueprint -> pick this repo.
+services:
+  - type: web
+    name: acme-hr-api
+    runtime: docker
+    dockerfilePath: ./src/Api/Dockerfile
+    dockerContext: .
+    plan: free
+    region: singapore
+    healthCheckPath: /health
+    autoDeploy: false          # deploys only through the deploy hook, after CI passes
+    envVars:
+      - key: SUPABASE_DB_URL
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: AllowedOrigins
+        sync: false            # your Vercel URL, e.g. https://acme-hr-team1.vercel.app
