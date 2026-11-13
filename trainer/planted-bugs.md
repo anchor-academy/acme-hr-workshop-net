@@ -1,18 +1,16 @@
-# Module 7 activity: "Which gate catches it?"
+# Module 7 activity: "Which check stops it?"
 
-Four bugs, each caught by a different gate. Show each diff, teams vote, then demo.
+A matching game. The slide shows four checks participants already used, each with a one-line definition, and four problems.
+Teams match each problem to one check; each letter is used once. No live demo: in Lab 5 everyone pushes bug 3 through the gates themselves.
 
-| # | Bug | Caught by | Why the earlier gates miss it |
+| # | Problem | Check | Why the others miss it |
 |---|---|---|---|
-| 1 | `WorkingDays.Count` counts Saturday (change `DayOfWeek.Saturday` check) | **PostToolUse hook** (local) — `WorkingDaysTests` fail right after Claude's edit | — first gate |
-| 2 | A hard-coded API key in `appsettings.json` | **Pre-commit** (secret scan, e.g. `gitleaks protect --staged`) | Tests still pass; the hook only runs tests |
-| 3 | `web/app/leave/page.tsx` uses a field the API no longer returns (TypeScript error) | **CI** (`npm run build`) | The local hook runs only .NET tests |
-| 4 | `DaysTakenThisYearAsync` counts Rejected and Pending leave (branch `lab5-planted-bug`) | **Claude review only** | Builds, type-checks and all tests pass: no test covers it |
+| 1 | An edit makes Saturday a working day (`WorkingDays.Count`). A weekend test exists. | **A. Test hook** (PostToolUse runs .NET tests after each edit) | First check; `WorkingDaysTests` fails right away |
+| 2 | The API renames a field; `web/app/leave/page.tsx` still uses the old name | **B. CI build** (`npm run build` type-checks the web app) | The local hook runs only .NET tests, and they pass |
+| 3 | `DaysTakenThisYearAsync` counts Rejected and Pending leave (branch `lab5-planted-bug`) | **C. Claude review** | Builds and all tests pass: no test covers it |
+| 4 | Someone asks Claude to print the API key from `.env` | **D. Deny rule** (plus the PreToolUse hook for shell commands) | Nothing else is about reading secrets |
 
-Debrief: each gate is cheap and catches a different class. The review is the last line, not the only line. After bug 4, the fix adds the missing test, so next time a cheaper gate catches it.
+Debrief: each check is cheap and catches a different kind of problem. The review is the last line, not the only line.
+After bug 3, the fix adds the missing test, so next time the test hook catches it.
 
-Pre-commit snippet for bug 2 (`.git/hooks/pre-commit` or pre-commit framework):
-```bash
-#!/usr/bin/env bash
-gitleaks protect --staged --redact || { echo "Secret found. Commit blocked."; exit 1; }
-```
+Optional extra (not in the repo, mention only): a pre-commit secret scan such as `gitleaks protect --staged` stops a real key pasted into `appsettings.json`.
