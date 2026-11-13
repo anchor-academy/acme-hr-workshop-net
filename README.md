@@ -13,9 +13,11 @@ Your team builds **Acme HR**, a small HR platform with AI, one lab at a time, us
 
 ## Setup (Day 1 morning, 15 minutes)
 
-1. **One person per team:** click **Use this template** → tick **Include all branches** → create the repo under your account → add your teammates.
-2. Everyone: `git clone` your team repo and `cd` into it.
-3. Copy `.env.example` to `.env` and fill in `ANTHROPIC_API_KEY` (given on the day). Optional now, needed by Lab 4: create a Supabase project (region **Singapore**) and set `SUPABASE_DB_URL`. Without it the API uses a local SQLite file.
+Everyone builds their own copy of Acme HR. Your team sits together, helps each other and scores together.
+
+1. Click **Use this template** → tick **Include all branches** → create the repo under your own GitHub account.
+2. `git clone` your repo and `cd` into it.
+3. Copy `.env.example` to `.env` and fill in `ANTHROPIC_API_KEY` (given on the day). Not needed until Lab 4: your own free Supabase project (region **Singapore**) and `SUPABASE_DB_URL`. Without it the API uses a local SQLite file.
 4. Run `./check-setup.sh` (macOS/Linux/Git Bash) or `./check-setup.ps1` (Windows PowerShell).
 5. Run it:
    - API: `dotnet run --project src/Api` → http://localhost:5080/health should say **database connected**
