@@ -36,6 +36,13 @@ Refactor <class> for readability without changing behaviour. Keep all tests pass
 Check the Definition of done in CLAUDE.md and confirm each item with evidence: which commands you ran and their results.
 ```
 
+## Module 2 — API warm-up
+
+### Add a second tool
+```text
+Read tools/Warmup/Program.cs. Add a second tool, get_public_holidays(state), that returns a small fake list of 2026 Malaysian public holidays for SEL, KUL and PNG, and an error for any other state. Follow the TODO and keep the loop unchanged. Build it, then run: dotnet run --project tools/Warmup -- "Can I take leave on 1 Feb 2026 in KL, and how many days do I have left?" Show me the tool_use lines from the output.
+```
+
 ## Lab 2 — Leave API
 
 ### Plan prompt (plan mode)
