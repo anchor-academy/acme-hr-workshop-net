@@ -1,6 +1,6 @@
 // Module 2 warm-up: the smallest complete tool-use loop, with one tool.
 // Run:  dotnet run --project tools/Warmup -- "How many leave days do I have?"
-// Needs ANTHROPIC_API_KEY in this terminal. Model from CLAUDE_MODEL, default claude-sonnet-5-5.
+// Reads ANTHROPIC_API_KEY from .env at the repo root. Model from CLAUDE_MODEL, default claude-sonnet-5-5.
 using System.Text.Json;
 using Anthropic;
 using Anthropic.Models.Messages;
@@ -9,9 +9,12 @@ var question = args.Length > 0 ? string.Join(' ', args) : "How many leave days d
 var model = Environment.GetEnvironmentVariable("CLAUDE_MODEL") ?? "claude-sonnet-5-5";
 const int MaxTurns = 5;
 
+// Read ANTHROPIC_API_KEY from the repo's .env, like the API does. Keep it out of your shell:
+// if it is exported where you run `claude`, Claude Code bills that key instead of your Claude plan.
+LoadDotEnv();
 if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY")))
 {
-    Console.WriteLine("Set ANTHROPIC_API_KEY in this terminal first (never in code).");
+    Console.WriteLine("Put ANTHROPIC_API_KEY in .env at the repo root (never in code).");
     return;
 }
 AnthropicClient client = new(); // reads ANTHROPIC_API_KEY
@@ -74,3 +77,20 @@ static ToolUnion Def(string name, string description, object properties, params 
         Required = required,
     },
 };
+
+static void LoadDotEnv()
+{
+    for (var dir = new DirectoryInfo(Directory.GetCurrentDirectory()); dir != null; dir = dir.Parent)
+    {
+        var file = Path.Combine(dir.FullName, ".env");
+        if (!File.Exists(file)) continue;
+        foreach (var line in File.ReadAllLines(file))
+        {
+            var i = line.IndexOf('=');
+            if (line.TrimStart().StartsWith('#') || i <= 0) continue;
+            var key = line[..i].Trim();
+            if (Environment.GetEnvironmentVariable(key) is null) Environment.SetEnvironmentVariable(key, line[(i + 1)..].Trim());
+        }
+        return;
+    }
+}

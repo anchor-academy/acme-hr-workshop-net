@@ -17,7 +17,7 @@ Everyone builds their own copy of Acme HR. Your team sits together, helps each o
 
 1. Click **Use this template** → tick **Include all branches** → create the repo under your own GitHub account.
 2. `git clone` your repo and `cd` into it.
-3. Copy `.env.example` to `.env` and fill in `ANTHROPIC_API_KEY` (given on the day). Not needed until Lab 4: your own free Supabase project (region **Singapore**) and `SUPABASE_DB_URL`. Without it the API uses a local SQLite file.
+3. Copy `.env.example` to `.env` and fill in `ANTHROPIC_API_KEY` (your own Console key, see the prep guide). Keep it in `.env` only: if it is exported in your shell, Claude Code bills it instead of your Claude plan. Not needed until Lab 4: your own free Supabase project (region **Singapore**) and `SUPABASE_DB_URL`. Without it the API uses a local SQLite file.
 4. Run `./check-setup.sh` (macOS/Linux/Git Bash) or `./check-setup.ps1` (Windows PowerShell).
 5. Run it:
    - API: `dotnet run --project src/Api` → http://localhost:5080/health should say **database connected**
