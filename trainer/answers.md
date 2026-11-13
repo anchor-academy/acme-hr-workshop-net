@@ -4,6 +4,8 @@
 `LeaveService.DaysTakenThisYearAsync` sums **all** requests, including Rejected and Pending ones, so "days taken" is too high.
 It has no tests, so `ci` passes; the Claude review should flag both the missing test and the bug.
 Fix: count only `Approved` requests, add tests for Approved / Pending / Rejected.
+Second finding (security): `GET /employees/{id}/summary` has no `AccessService` check, so any signed-in employee can read anyone's summary.
+CLAUDE.md says endpoints touching employee data need a 403 test; a good review flags it. Fix: `CanSeeEmployeeAsync`, plus a test that Gopal gets 403 for Farah.
 
 ## Lab 2 ticket notes
 - Ticket 3 (5 working days) must come back `needs_manager_approval` from `apply_leave`.
