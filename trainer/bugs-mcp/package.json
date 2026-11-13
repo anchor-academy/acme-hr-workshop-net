@@ -1,0 +1,12 @@
+{
+  "name": "bugs-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Module 5 demo: a tiny read-only MCP server over a fake bug list (one record is poisoned on purpose).",
+  "scripts": { "start": "node index.js" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "3.25.76"
+  }
+}
