@@ -39,6 +39,9 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseCors();
+app.UseDefaultFiles();   // /app/ -> /app/index.html (web app built into wwwroot/app in the container)
+app.UseStaticFiles();
+app.MapGet("/", () => Results.Redirect("/app/")).ExcludeFromDescription();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();

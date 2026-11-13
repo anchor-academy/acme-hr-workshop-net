@@ -1,6 +1,7 @@
 // The only place the web app talks to the Acme HR API.
 const RAW = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5080";
-const BASE = RAW.includes("://") ? RAW : `https://${RAW}`; // Render passes a bare host name
+// "" = same origin (the API container serves the web app); a bare host name gets https://
+const BASE = RAW === "" || RAW.includes("://") ? RAW : `https://${RAW}`;
 
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
