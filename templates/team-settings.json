@@ -8,7 +8,10 @@
       "Bash(npm run *)",
       "Bash(git status *)",
       "Bash(git diff *)",
-      "Bash(git log *)"
+      "Bash(git log *)",
+      "Bash(npm test)",
+      "Bash(npm test *)",
+      "Bash(npx tsc *)"
     ],
     "ask": [
       "Bash(git push *)"
@@ -26,7 +29,10 @@
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.claude/hooks/block-secrets.sh\"" }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/block-secrets.js\""
+          }
         ]
       }
     ],
@@ -34,7 +40,10 @@
       {
         "matcher": "Edit|Write",
         "hooks": [
-          { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.claude/hooks/run-tests.sh\"" }
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR}/.claude/hooks/run-tests.sh\""
+          }
         ]
       }
     ]
