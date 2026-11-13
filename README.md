@@ -6,9 +6,9 @@ Your team builds **Acme HR**, a small HR platform with AI, one lab at a time, us
 
 | Part | Tech | Hosted on |
 |---|---|---|
-| API | .NET 8 Web API (C#), EF Core | Render |
-| Database, files | Supabase (Postgres, Storage) — or local SQLite while developing | Supabase |
-| Web app | Next.js (TypeScript) in `web/` | Vercel |
+| API | .NET 8 Web API (C#), EF Core | Render (one Docker service) |
+| Web app | Next.js (TypeScript) in `web/`, served by the API at `/app` | Render (same service) |
+| Database | Render Postgres — or local SQLite while developing | Render |
 | AI | Claude API (`Anthropic` NuGet package) + Claude Code | Anthropic |
 
 ## Setup (Day 1 morning, 15 minutes)
@@ -17,7 +17,7 @@ Everyone builds their own copy of Acme HR. Your team sits together, helps each o
 
 1. Click **Use this template** → tick **Include all branches** → create the repo under your own GitHub account.
 2. `git clone` your repo and `cd` into it.
-3. Copy `.env.example` to `.env` and fill in `ANTHROPIC_API_KEY` (your own Console key, see the prep guide). Keep it in `.env` only: if it is exported in your shell, Claude Code bills it instead of your Claude plan. Not needed until Lab 4: your own free Supabase project (region **Singapore**) and `SUPABASE_DB_URL`. Without it the API uses a local SQLite file.
+3. Copy `.env.example` to `.env` and fill in `ANTHROPIC_API_KEY` (your own Console key, see the prep guide). Keep it in `.env` only: if it is exported in your shell, Claude Code bills it instead of your Claude plan. Not needed until Lab 4: your own free Render Postgres and `DATABASE_URL`. Without it the API uses a local SQLite file.
 4. Run `./check-setup.sh` (macOS/Linux/Git Bash) or `./check-setup.ps1` (Windows PowerShell).
 5. Run it:
    - API: `dotnet run --project src/Api` → http://localhost:5080/health should say **database connected**
@@ -50,7 +50,7 @@ Each lab starts from the previous lab's finished code. Behind? Check out the nex
 | 1 | [Lab 1 — Code Generation with Claude Code](labs/lab1/README.md) | `lab1-start` | Leave API: requests, half-day leave, approvals |
 | 2 | [Lab 2 — Customer Support Resolution Agent](labs/lab2/README.md) | `lab2-start` | HR helpdesk agent (Claude API + tools) |
 | 3 | [Lab 3 — Multi-Agent Research System](labs/lab3/README.md) | `lab3-start` | Policy research agents with sources |
-| 4 | [Lab 4 — Developer Productivity with Claude](labs/lab4/README.md) | `lab4-start` | Skill, Supabase MCP, two features in parallel |
+| 4 | [Lab 4 — Developer Productivity with Claude](labs/lab4/README.md) | `lab4-start` | Skill, Render MCP, two features in parallel |
 | 5 | [Lab 5 — Claude Code for CI](labs/lab5/README.md) | `lab5-start` | CI gates + Claude review, deploy live |
 | 6 | [Lab 6 — Structured Data Extraction](labs/lab6/README.md) | `lab6-start` | Document intake with HR review |
 

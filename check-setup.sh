@@ -12,7 +12,7 @@ command -v claude >/dev/null && ok "Claude Code $(claude --version 2>/dev/null |
 [ -f .env ] && ok ".env present" || bad ".env missing: copy .env.example to .env and fill it in"
 set -a; [ -f .env ] && . ./.env; set +a
 [ -n "$ANTHROPIC_API_KEY" ] && ok "ANTHROPIC_API_KEY set (not shown)" || bad "ANTHROPIC_API_KEY not set in .env"
-[ -n "$SUPABASE_DB_URL" ] && ok "SUPABASE_DB_URL set" || warn "SUPABASE_DB_URL empty: the API will use local SQLite"
+[ -n "$DATABASE_URL" ] && ok "DATABASE_URL set (Render Postgres)" || warn "DATABASE_URL empty: the API uses local SQLite (fine until Lab 4)"
 if [ -n "$ANTHROPIC_API_KEY" ]; then
   code=$(curl -s -o /dev/null -w "%{http_code}" https://api.anthropic.com/v1/messages -H "x-api-key: $ANTHROPIC_API_KEY" -H "anthropic-version: 2023-06-01" -H "content-type: application/json" -d '{"model":"claude-haiku-5-5","max_tokens":1,"messages":[{"role":"user","content":"hi"}]}')
   [ "$code" = "200" ] && ok "Claude API call works" || bad "Claude API call returned HTTP $code"

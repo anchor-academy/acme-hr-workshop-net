@@ -7,8 +7,8 @@ Api.DotEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
 if (Environment.GetEnvironmentVariable("PORT") is { } port) builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
-// Database: Supabase Postgres when SUPABASE_DB_URL is set, otherwise a local SQLite file.
-var pg = builder.Configuration["SUPABASE_DB_URL"];
+// Database: Render Postgres when DATABASE_URL is set (the postgres:// URL Render gives you), otherwise a local SQLite file.
+var pg = PgUrl.ToNpgsql(builder.Configuration["DATABASE_URL"]);
 builder.Services.AddDbContext<AcmeDb>(o =>
 {
     if (!string.IsNullOrWhiteSpace(pg)) o.UseNpgsql(pg);

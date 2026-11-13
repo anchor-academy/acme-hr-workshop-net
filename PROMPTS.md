@@ -83,7 +83,7 @@ Read src/Api/Research/PolicyResearch.cs. Implement RunWorker(subtopic): a separa
 
 ### MCP question
 ```text
-Using the supabase MCP server, which employees have more than 10 days of leave available? Read-only, show the query you used.
+Using the render MCP server: select my workspace, find my acme-hr Postgres database, and answer with a read-only query: which employees have more than 10 days of leave available? Show the SQL you used.
 ```
 
 ### Feature A (worktree 1)

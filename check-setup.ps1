@@ -13,7 +13,7 @@ if (Test-Path .env) {
   Get-Content .env | Where-Object { $_ -match '^\s*[^#].*=' } | ForEach-Object { $k,$v = $_ -split '=',2; [Environment]::SetEnvironmentVariable($k.Trim(), $v.Trim(), 'Process') }
 } else { Bad ".env missing: copy .env.example to .env and fill it in" }
 if ($env:ANTHROPIC_API_KEY) { Ok "ANTHROPIC_API_KEY set (not shown)" } else { Bad "ANTHROPIC_API_KEY not set in .env" }
-if ($env:SUPABASE_DB_URL) { Ok "SUPABASE_DB_URL set" } else { Warn "SUPABASE_DB_URL empty: the API will use local SQLite" }
+if ($env:DATABASE_URL) { Ok "DATABASE_URL set (Render Postgres)" } else { Warn "DATABASE_URL empty: the API uses local SQLite (fine until Lab 4)" }
 if ($env:ANTHROPIC_API_KEY) {
   try {
     $body = '{"model":"claude-haiku-5-5","max_tokens":1,"messages":[{"role":"user","content":"hi"}]}'
