@@ -5,7 +5,7 @@
 **Branch:** `git checkout lab4-start` · Solution: `lab5-start`.
 
 ## Before you start
-- Your team's Supabase project must be set in `.env` (`SUPABASE_DB_URL`) and the API run once against it (it creates and seeds the tables).
+- Create your own free Supabase project (region Singapore), set `SUPABASE_DB_URL` in `.env` and run the API once against it (it creates and seeds the tables).
 - Create a Supabase personal access token (Account → Access Tokens) and set `SUPABASE_ACCESS_TOKEN` and `SUPABASE_PROJECT_REF` in your shell before starting `claude`.
 
 ## Steps
