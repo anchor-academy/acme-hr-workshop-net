@@ -1,15 +1,17 @@
-# Lab 4 — Developer Productivity with Claude (35 min)
+# Lab 4 — Developer Productivity with Claude (30 min)
 
 **Goal:** make Claude Code a team tool: a Skill, a read-only MCP connection to your data, and two features built in parallel.
 
 **Branch:** `git checkout lab4-start` · Solution: `lab5-start`.
 
 ## Before you start
-- Create your own free Supabase project (region Singapore), set `SUPABASE_DB_URL` in `.env` and run the API once against it (it creates and seeds the tables).
-- Create a Supabase personal access token (Account → Access Tokens) and set `SUPABASE_ACCESS_TOKEN` and `SUPABASE_PROJECT_REF` in your shell before starting `claude`.
+- Render → New → **Postgres**: name `acme-hr-db`, region **Singapore**, plan **Free**. When it is ready: Connect → copy the **External Database URL** into `.env` as `DATABASE_URL`. Run the API once (`dotnet run --project src/Api`): it creates and seeds the tables in your Render database.
+- Render → Account Settings → **API Keys** → create one. Set it in your shell before starting `claude` (not in `.env`):
+  `export RENDER_API_KEY=...` (macOS/Linux/Git Bash) or `$env:RENDER_API_KEY="..."` (PowerShell).
+- The key can change your whole Render account, so `.claude/settings.json` **denies** every Render MCP tool that creates or updates something. Claude can only read and run read-only SQL.
 
 ## Steps
-1. Start `claude`, run `/mcp`: `supabase` should be connected (read-only). Paste **MCP question**.
+1. Start `claude` (approve the `render` server once), run `/mcp`: `render` should be connected. Paste **MCP question**.
 2. Run `./make-worktrees.sh` (or `.ps1`). Open two terminals:
    - `../acme-wt-calendar` → paste **Feature A** (leave calendar page)
    - `../acme-wt-holidays` → paste **Feature B** (public holidays endpoint)
@@ -19,7 +21,7 @@
 4. Paste **Release notes**. Check Claude used the `release-notes` Skill.
 
 ## Done when
-- [ ] MCP answers from your live Supabase data
+- [ ] MCP answers from your live Render Postgres data, with a read-only query
 - [ ] Both features merged with tests
 - [ ] Release notes follow the Skill's format
 
