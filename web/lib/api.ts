@@ -1,4 +1,5 @@
 // The only place the web app talks to the Acme HR API.
+// "" = same origin: on Render the API serves this web app at /app (see src/Api/Dockerfile).
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5080";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 

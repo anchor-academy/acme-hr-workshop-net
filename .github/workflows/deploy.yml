@@ -16,4 +16,4 @@ jobs:
         run: |
           if [ -z "$HOOK" ]; then echo "::warning::RENDER_DEPLOY_HOOK not set, skipping API deploy"; exit 0; fi
           curl -fsS -X POST "$HOOK"
-# The web app deploys through Vercel's Git integration (production on main, a preview for every pull request).
+# One Render service runs the API and serves the web app at /app, so this single hook deploys both.

@@ -1,18 +1,17 @@
 # Render Blueprint: New -> Blueprint -> pick this repo.
+# One free web service runs the API and serves the web app at /app, so there is no CORS and no second host.
 services:
   - type: web
-    name: acme-hr-api
+    name: acme-hr
     runtime: docker
     dockerfilePath: ./src/Api/Dockerfile
     dockerContext: .
     plan: free
     region: singapore
     healthCheckPath: /health
-    autoDeploy: false          # deploys only through the deploy hook, after CI passes
+    autoDeploy: false          # deploys only through the deploy hook, after CI passes on main
     envVars:
-      - key: SUPABASE_DB_URL
-        sync: false
+      - key: DATABASE_URL
+        sync: false            # your Lab 4 Render Postgres: Connect -> Internal Database URL
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: AllowedOrigins
-        sync: false            # your Vercel URL, e.g. https://acme-hr-team1.vercel.app

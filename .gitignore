@@ -9,8 +9,9 @@ obj/
 node_modules/
 .next/
 next-env.d.ts
-.vercel/
 TestResults/
 .vs/
 .idea/
 *.tsbuildinfo
+web/out/
+src/Api/wwwroot/
