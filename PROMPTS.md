@@ -47,12 +47,12 @@ Read tools/Warmup/Program.cs. Add a second tool, get_public_holidays(state), tha
 
 ### Plan prompt (plan mode)
 ```text
-Read docs/feature-spec-leave.md, src/Api/Services/LeaveService.cs and the failing test. Propose a plan: files to change, tests to add first, and risks. Include fixing the failing weekend test. Ask me if anything in the spec is unclear. Don't write code yet.
+Read docs/feature-spec-leave.md, src/Api/Services/LeaveService.cs, src/Api/Auth/AccessService.cs and the failing test. Propose a plan: files to change, tests to add first, and risks. Include fixing the failing weekend test. Ask me if anything in the spec is unclear. Don't write code yet.
 ```
 
 ### Build it
 ```text
-Go ahead with the plan. Write the tests first, then the code. Keep controllers thin. When the API is done, add the create form and Approve / Reject buttons to web/app/leave/page.tsx using web/lib/api.ts. Then run npm run build in web/ to check the page compiles.
+Go ahead with the plan. Write the tests first, then the code, including API tests in src/Api.Tests that another employee gets 403 on approve. Keep controllers thin. When the API is done, add the create form and Approve / Reject buttons to web/app/leave/page.tsx using web/lib/api.ts. Then run npm run build in web/ to check the page compiles.
 ```
 
 ### Try to break the rules

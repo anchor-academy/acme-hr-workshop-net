@@ -22,7 +22,24 @@ Everyone builds their own copy of Acme HR. Your team sits together, helps each o
 5. Run it:
    - API: `dotnet run --project src/Api` → http://localhost:5080/health should say **database connected**
    - Web: `cd web && cp .env.example .env.local && npm install && npm run dev` → http://localhost:3000
-6. Start Claude Code in the repo (`claude`) and **accept the trust dialog**. Until you do, the team allow rules in `.claude/settings.json` are ignored and Claude asks before every `dotnet` command. Then paste **Explain the repo** from [PROMPTS.md](PROMPTS.md).
+6. Sign in at http://localhost:3000 with a training account (below).
+7. Start Claude Code in the repo (`claude`) and **accept the trust dialog**. Until you do, the team allow rules in `.claude/settings.json` are ignored and Claude asks before every `dotnet` command. Then paste **Explain the repo** from [PROMPTS.md](PROMPTS.md).
+
+## Sign in (training accounts)
+
+Every seeded employee can sign in with their work email and the shared training password **`Acme@2026`**
+(set `SEED_USER_PASSWORD` in `.env` to change it before the first run). Use these four:
+
+| Who | Email | Roles | Can do |
+|---|---|---|---|
+| Farah Tan | `farah.tan6@acme-hr.example` | Employee | Own leave and balance |
+| Aina Lee | `aina.lee1@acme-hr.example` | Employee, Manager | Own leave + approve her team (Farah is in it) |
+| Dina Ismail | `dina.ismail4@acme-hr.example` | Employee, Manager, HR | Everyone's leave, HR review |
+| Gopal Ng | `gopal.ng7@acme-hr.example` | Employee | Another team: use him to check you get 403 |
+
+The full list is on the Employees page. Five wrong passwords lock an account for 15 minutes.
+In Swagger: call `POST /auth/login`, copy `accessToken`, click **Authorize**, paste it.
+Training only: a real system never shares one password between users.
 
 ## Labs (build order)
 

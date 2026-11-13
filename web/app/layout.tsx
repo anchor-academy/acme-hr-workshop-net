@@ -1,5 +1,6 @@
 import "./globals.css";
 import Link from "next/link";
+import { AuthGate } from "@/components/AuthGate";
 
 export const metadata = { title: "Acme HR" };
 
@@ -14,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/leave">Leave</Link>
           {/* Labs add: Helpdesk (Lab 2), Policies (Lab 3), Calendar (Lab 4), Documents and Review (Lab 6) */}
         </nav>
-        <main>{children}</main>
+        <main><AuthGate>{children}</AuthGate></main>
       </body>
     </html>
   );

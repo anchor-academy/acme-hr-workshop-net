@@ -9,12 +9,13 @@
 2. Start `claude` (accept the trust dialog the first time), switch to plan mode (Shift+Tab), paste the **Lab 1 plan prompt** from [PROMPTS.md](../../PROMPTS.md). Review the plan and ask for one change.
 3. Approve and build (paste **Build it**). Watch the test hook run after each edit.
 4. Paste **Try to break the rules**. Three layers should stop it: the CLAUDE.md instruction (Claude may refuse on its own), the `Read` deny rule, and the PreToolUse hook `scripts/block-secrets.js` for shell commands. Only the last two are enforced.
-5. Run the API and the web app. Create a 2-day request (approved) and a 5-day request (pending), then approve it.
+5. Run the API and the web app. Sign in as Farah: create a 2-day request (approved) and a 5-day request (pending). Sign out, sign in as Aina (her manager) and approve it.
 
 ## Done when
 - [ ] The plan was reviewed before any code
 - [ ] All tests pass, including the weekend test that failed
 - [ ] The Leave page creates requests and shows their status
+- [ ] Farah cannot approve her own request (403); Aina can
 - [ ] Reading `.env` was blocked by the deny rule and by the hook
 
 ## Stuck?

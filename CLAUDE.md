@@ -23,6 +23,13 @@ All data is synthetic. Company: Acme HR Sdn Bhd.
 - Every bug fix starts with a failing test.
 - Never read or print `.env` or any secret.
 
+## Security (sign-in and access)
+- Sign-in is ASP.NET Core Identity (`src/Api/Auth/`): email + password, bearer token, roles Employee, Manager, HR.
+- Every controller needs a signed-in user. Only `/health` and `/auth/login` are open. Do not add `[AllowAnonymous]` without asking.
+- The signed-in employee is `User.EmployeeId()`. Never trust an `employeeId` from the body or query to decide who is acting.
+- Who may see or change whose data lives in `AccessService` (Employee: own; Manager: own + direct reports; HR: all). Return 403 when it says no.
+- New endpoints that touch employee data need a test that another employee gets 403.
+
 ## Definition of done
 - `dotnet build` and `dotnet test` pass with no new warnings.
 - Say which tests you ran and the result.

@@ -1,7 +1,8 @@
 # Feature spec: leave requests with half-day leave (Lab 1)
 
 ## Endpoints
-- `POST /leave` — body: `employeeId`, `startDate`, `endDate`, `halfDay` (`None` | `AM` | `PM`), `reason`.
+- `POST /leave` — body: `startDate`, `endDate`, `halfDay` (`None` | `AM` | `PM`), `reason`.
+  The employee is the signed-in user (`User.EmployeeId()`). An `employeeId` in the body is ignored.
 - `POST /leave/{id}/approve` and `POST /leave/{id}/reject`.
 
 ## Rules
@@ -12,7 +13,9 @@
    (two half days on the same date, one AM and one PM, do not overlap).
 5. Up to 3 working days: status `Approved` immediately. More than 3: status `Pending` (manager approval).
 6. Only `Pending` requests can be approved or rejected.
-7. Validation errors return 400 ProblemDetails with a clear message.
+7. Only the requester's manager or HR may approve or reject, and never their own request
+   (`AccessService.CanDecideLeaveAsync`). Anyone else gets 403.
+8. Validation errors return 400 ProblemDetails with a clear message.
 
 ## Also
 - Fix the known bug: leave spanning a weekend counts Saturday and Sunday (see the failing test).
