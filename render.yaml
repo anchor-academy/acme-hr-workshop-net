@@ -1,4 +1,11 @@
-# Render Blueprint: New -> Blueprint -> pick this repo.
+# Render Blueprint: New -> Blueprint -> this repo. Everything on Render's free plan, region Singapore.
+databases:
+  - name: acme-hr-db
+    plan: free
+    region: singapore
+    databaseName: acmehr
+    user: acmehr
+
 services:
   - type: web
     name: acme-hr-api
@@ -8,11 +15,20 @@ services:
     plan: free
     region: singapore
     healthCheckPath: /health
-    autoDeploy: false          # deploys only through the deploy hook, after CI passes
     envVars:
-      - key: SUPABASE_DB_URL
-        sync: false
+      - key: DATABASE_URL
+        fromDatabase: { name: acme-hr-db, property: connectionString }
+      - key: AllowedOrigins
+        fromService: { name: acme-hr-web, type: web, property: host }
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: AllowedOrigins
-        sync: false            # your Vercel URL, e.g. https://acme-hr-team1.vercel.app
+
+  - type: web
+    name: acme-hr-web
+    runtime: static
+    rootDir: web
+    buildCommand: npm ci && NEXT_OUTPUT=export npm run build
+    staticPublishPath: out
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService: { name: acme-hr-api, type: web, property: host }

@@ -6,8 +6,8 @@ Api.DotEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
 if (Environment.GetEnvironmentVariable("PORT") is { } port) builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
-// Database: Supabase Postgres when SUPABASE_DB_URL is set, otherwise a local SQLite file.
-var pg = builder.Configuration["SUPABASE_DB_URL"];
+// Database: Postgres when DATABASE_URL (Render) or SUPABASE_DB_URL is set, otherwise a local SQLite file.
+var pg = Api.Data.PgUrl.ToNpgsql(builder.Configuration["DATABASE_URL"] ?? builder.Configuration["SUPABASE_DB_URL"]);
 builder.Services.AddDbContext<AcmeDb>(o =>
 {
     if (!string.IsNullOrWhiteSpace(pg)) o.UseNpgsql(pg);
@@ -23,7 +23,9 @@ builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var origins = (builder.Configuration["AllowedOrigins"] ?? "http://localhost:3000").Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+var origins = (builder.Configuration["AllowedOrigins"] ?? "http://localhost:3000")
+    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+    .Select(o => o.Contains("://") ? o : "https://" + o).ToArray(); // Render passes a bare host name
 builder.Services.AddCors(o => o.AddDefaultPolicy(p => p.WithOrigins(origins).AllowAnyHeader().AllowAnyMethod()));
 
 var app = builder.Build();
