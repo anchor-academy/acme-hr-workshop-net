@@ -27,16 +27,23 @@ jobs:
       - name: Review the pull request (headless)
         run: |
           git diff origin/${{ github.base_ref }}...HEAD > pr.diff
-          PROMPT="You are reviewing a pull request for Acme HR (.NET API + Next.js). The diff is in pr.diff; read changed files for context.
+          PROMPT="You are reviewing a pull request for Acme HR (.NET API + Next.js). The diff is in pr.diff and has the full change; open other files only when you need context.
           Check only: (1) new or changed logic without tests, (2) obvious bugs, (3) secrets or personal data in the diff.
           Write a short review in markdown with file and line for each finding.
+          Block only for real defects. Put minor style or edge-case ideas under a 'Suggestions' heading; they do not change the verdict.
           The LAST line must be exactly 'VERDICT: PASS' if there are no findings of type 1, 2 or 3, otherwise 'VERDICT: FAIL'."
           claude -p "$PROMPT" \
             --output-format json \
-            --max-turns 5 \
+            --max-turns 12 \
             --allowedTools "Read,Grep,Glob" > review.json
       - name: Post review, record cost, enforce verdict
         run: |
+          SUBTYPE=$(jq -r '.subtype // "n/a"' review.json)
+          if [ "$SUBTYPE" != "success" ]; then
+            echo "::error::Claude review did not finish ($SUBTYPE). Re-run the job or raise --max-turns."
+            echo "### Claude review did not finish: $SUBTYPE" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
           RESULT=$(jq -r '.result' review.json)
           COST=$(jq -r '.total_cost_usd // "n/a"' review.json)
           TURNS=$(jq -r '.num_turns // "n/a"' review.json)
